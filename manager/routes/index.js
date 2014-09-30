@@ -9,4 +9,7 @@ module.exports = function (app) {
   // Internal
   app.use(require('./dashboard'));
   app.use(require('./account'));
+
+  // Admin
+  require('./admin')(app);
 };

@@ -1,0 +1,62 @@
+.navbar.navbar-default.navbar-fixed-top(role='navigation')
+  .container
+    .navbar-header
+      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand(href='/') 
+        img(src='/img/logox48.png', style='height: 20px;', alt='')
+        !=" MAIRAE"
+    .navbar-collapse.collapse
+      ul.nav.navbar-nav
+        li
+          a(href='/admin') Admin Dashboard
+        li.dropdown
+          a.dropdown-toggle(href='#', data-toggle='dropdown') Management
+           span.caret=" "
+          ul.dropdown-menu(role='menu')
+            li
+              a(href='/admin/games') Games
+            li
+              a(href='/admin/servers') Servers
+            li
+              a(href='/admin/users') Users
+
+        li.dropdown
+          a.dropdown-toggle(href='#', data-toggle='dropdown') Analytics
+           span.caret=" "
+          ul.dropdown-menu(role='menu')
+            li
+              a(href='/admin/analytics') Overview
+            li
+              a(href='/admin/analytics/servers') Server Usage
+            li
+              a(href='/admin/analytics/users') User Analytics 
+
+        li.dropdown
+          a.dropdown-toggle(href='#', data-toggle='dropdown') Monitoring
+           span.caret=" "
+          ul.dropdown-menu(role='menu')
+            li
+              a(href='/admin/monitoring') Overview
+            li
+              a(href='/admin/monitoring/servers') Server Monitoring
+            li
+              a(href='/admin/monitoring/users') Users Monitoring
+
+
+      ul.nav.navbar-nav.navbar-right
+        li.dropdown
+          a.dropdown-toggle(href="#", data-toggle="dropdown")=user.name || user.username
+            - if (user.admin)
+              !=" (A) "
+            - else
+              !=" (M) "
+            span.caret=" "
+          ul.dropdown-menu(role="menu")
+            li
+              a(href="/account") Account Settings
+            li
+              a(href="/signout") Sign out

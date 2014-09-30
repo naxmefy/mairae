@@ -1,7 +1,7 @@
 extends layouts/default
 
 block page-header
-  - if(locals.error.status)
+  - if(locals.error)
     h1
       !=error.status+" "
       small=message
