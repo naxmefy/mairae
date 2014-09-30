@@ -30,7 +30,8 @@ module.exports = function (app) {
   app.use('/admin*', function(err, req, res, next) {
       res.status(err.status || 500);
       res.render('modules/admin/error', {
-          message: err.message
+          message: err.message,
+          error: {}
       });
   });
 };
