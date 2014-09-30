@@ -24,7 +24,7 @@ block content
             tr
               th.text-center Name
               th.text-center Email
-              th.text-center Admin
+              th.text-center Is Admin
               th.text-center Options
 
           tbody
@@ -32,11 +32,12 @@ block content
               tr
                 td.text-center=userVal.name
                 td.text-center=userVal.email
-                td.text-center
-                    - if (userVal.admin)
-                      span.glyphicon.glyphicon-thumbs-up
-                    - else
-                      span.glyphicon.glyphicon-thumbs-down
+                - if (userVal.admin)
+                  td.text-center(data-search='superadmin admin')
+                    span.glyphicon.glyphicon-thumbs-up
+                - else
+                  td.text-center(data-search='member')
+                    span.glyphicon.glyphicon-thumbs-down
                 td.text-center
                   .btn-group
                     a.btn.btn-primary(href='/admin/users/'+userVal._id)
