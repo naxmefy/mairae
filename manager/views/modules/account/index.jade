@@ -1,0 +1,62 @@
+extends ../../layouts/default
+
+block append style
+  link(rel='stylesheet', href='/vendor/gridforms/gridforms.css')
+block append script
+  script(src='/vendor/gridforms/gridforms.js')
+
+block page-header
+  h1 Account
+
+block content
+  .container
+    - if (locals.message.length > 0)
+      .row
+        .col-md-12
+          .alert.alert-info.alert-dismissible(role='alert')
+            button.close(type='button', data-dismiss='alert')
+                span(aria-hidden='true') ×
+                span.sr-only Close
+              strong info!
+              !=" " + message
+
+    - if (locals.error.length > 0)
+      .row
+        .col-md-12
+          .alert.alert-danger.alert-dismissible(role='alert')
+            button.close(type='button', data-dismiss='alert')
+                span(aria-hidden='true') ×
+                span.sr-only Close
+              strong Error!
+              !=" " + error
+
+        
+    .row
+      .col-md-12
+        form.grid-form(action='/account', method='post', role='form', autocorrect="off" autocapitalize="off" autocomplete="off")
+          <input type="text" name="prevent_autofill" id="prevent_autofill" value="" style="display:none;" />
+          <input type="password" name="password_fake" value="" style="display:none;" />
+          <input type="password" />
+          fieldset
+            legend User Data
+            div(data-row-span='2')
+              div(data-field-span='1')
+                label Name
+                input(type='text', name='name', value=user.name)
+              div(data-field-span='1')
+                label Email
+                input(type='text', name='email', value=user.email)
+          br
+          fieldset
+            legend Set new password
+            div(data-row-span='2')
+              div(data-field-span='1')
+                label New password
+                input(type='password', name='password', placeholder='Enter password...', value='', autocomplete="off")
+              div(data-field-span='1')
+                label Repeat new password
+                input(type='password', name='passwordrepeat', placeholder='Repeat password...', value='', autocomplete="off")
+            div(data-row-span='2')
+              div(data-field-span='2')
+                .pull-right
+                  input.btn.btn-primary(type='submit', value='Save')

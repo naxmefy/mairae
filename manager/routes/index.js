@@ -5,5 +5,8 @@ module.exports = function (app) {
   app.use(require('./signin'));
   app.use(require('./signup'));
   app.use(require('./signout'));
+
+  // Internal
   app.use(require('./dashboard'));
+  app.use(require('./account'));
 };

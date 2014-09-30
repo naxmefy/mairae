@@ -17,6 +17,7 @@ var cookieParser            = require('cookie-parser');
 var favicon                 = require('serve-favicon');
 var methodOverride          = require('method-override');
 var flash                   = require('connect-flash');
+var _                       = require('lodash');
 var stylus                  = require('stylus');
 
 module.exports = {
@@ -39,5 +40,6 @@ module.exports = {
   favicon: favicon,
   methodOverride: methodOverride,
   flash: flash,
+  _: _,
   stylus: stylus
 };

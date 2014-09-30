@@ -7,15 +7,10 @@ var LocalStrategy = common.Modules.passportLocal.Strategy;
 var User = common.Models.user;
   
 passport.serializeUser(function(user, done){
-  log("serializeUser");
-  log(user);
   done(null, user.id);
 });
 passport.deserializeUser(function(id, done){
-  log("deserializeUser");
-  log(id);
   User.findById(id, function(err, user){
-    log(user);
     done(err, user);
   });
 });
