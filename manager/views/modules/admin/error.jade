@@ -1,0 +1,9 @@
+extends layout
+
+block page-header
+  - if(locals.error)
+    h1
+      !=error.status+" "
+      small=message
+  - else
+    h1=message
