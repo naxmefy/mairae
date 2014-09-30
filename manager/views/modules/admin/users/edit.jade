@@ -1,0 +1,91 @@
+extends ../layout
+
+block append style
+  link(rel='stylesheet', href='/vendor/gridforms/gridforms.css')
+  link(rel='stylesheet', href='//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css')
+
+block append script
+  script(src='/vendor/gridforms/gridforms.js')
+  script(src='//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js')
+
+block page-header
+  h1=editableUser.name
+
+block content
+  .container    
+    .row
+      .col-md-12
+        ul.nav.nav-tabs(role='tablist')
+          li
+            a(href='/admin/users') Back to list
+          li.active
+            a(href='#profile', role='tab', data-toggle='tab') Profile
+          li
+            a(href='#servers', role='tab', data-toggle='tab') Servers
+          li
+            a(href='#activities', role='tab', data-toggle='tab') Activities
+
+        .tab-content
+          .tab-pane.active#profile
+            form.grid-form(action='/admin/users/'+editableUser._id, method='post', role='form', autocorrect="off" autocapitalize="off" autocomplete="off")
+              input#prevent_autofill(type='text', name='prevent_autofill', value='', style='display: none;')
+              input(type='password', name='password_fake', value='', style='display: none;')
+              input(type='password')
+
+              fieldset
+                legend User Data
+                div(data-row-span='2')
+                  div(data-field-span='1')
+                    label Name
+                    input(type='text', name='name', value=editableUser.name, required='required')
+                  div(data-field-span='1')
+                    label Email
+                    input(type='text', name='email', value=editableUser.email, required='required')
+                div(data-row-span='2')
+                  div(data-field-span='1')
+                    label Admin
+                    - if(editableUser.admin)
+                      input(type='checkbox', name='admin', checked)
+                    - else
+                      input(type='checkbox', name='admin')
+              br
+              fieldset
+                legend Set new password
+                div(data-row-span='2')
+                  div(data-field-span='1')
+                    label New password
+                    input(type='password', name='password', placeholder='Enter password...', value='', autocomplete="off")
+                  div(data-field-span='1')
+                    label Repeat new password
+                    input(type='password', name='passwordrepeat', placeholder='Repeat password...', value='', autocomplete="off")
+              br
+              fieldset
+                div(data-row-span='2')
+                  div(data-field-span='2')
+                    .pull-right
+                      input.btn.btn-primary(type='submit', value='Save')
+          
+          .tab-pane#servers 
+
+          .tab-pane#activities
+            br
+            table.table.table-striped#activitiestable
+              thead
+                tr
+                  th.text-center Title
+                  th.text-center Description
+                  th.text-center Date
+
+              tbody
+                each activity, index in editableUser.activities
+                  tr
+                    td.text-center=activity.title
+                    td.text-center=activity.description
+                    td.text-center=activity.createdAt                 
+
+block footer_script
+  script.
+    $(document).ready(function() {
+      $('#activitiestable').dataTable();
+      
+    });

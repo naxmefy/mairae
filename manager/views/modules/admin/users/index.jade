@@ -1,0 +1,52 @@
+extends ../layout
+
+block append style
+  link(rel='stylesheet', href='//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css')
+
+block append script
+  script(src='//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js')
+
+block page-header
+  h1 User Management
+
+block content
+  .container
+    .row
+      .col-md-12
+        a.btn.btn-success(href='/admin/users/new')
+          i.glyphicon.glyphicon-plus
+          !=" Add User"
+    br
+    .row
+      .col-md-12
+        table.table.table-striped#users
+          thead
+            tr
+              th.text-center Name
+              th.text-center Email
+              th.text-center Admin
+              th.text-center Options
+
+          tbody
+            each userVal, index in users
+              tr
+                td.text-center=userVal.name
+                td.text-center=userVal.email
+                td.text-center
+                    - if (userVal.admin)
+                      span.glyphicon.glyphicon-thumbs-up
+                    - else
+                      span.glyphicon.glyphicon-thumbs-down
+                td.text-center
+                  .btn-group
+                    a.btn.btn-primary(href='/admin/users/'+userVal._id)
+                      i.glyphicon.glyphicon-pencil
+                    a.btn.btn-danger(href='/admin/users/'+userVal._id+'/delete')
+                      i.glyphicon.glyphicon-remove
+
+block footer_script
+  script.
+    $(document).ready(function() {
+      $('#users').dataTable();
+      
+    });

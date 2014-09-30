@@ -3,7 +3,16 @@ module.exports = function (app) {
   var common = app.get('common');
   app.use('/admin', common.Middlewares.auth.isAdmin);
 
+  app.use('/admin', function(req, res, next) {
+    res.locals.message = req.flash('info');
+    res.locals.error = req.flash('error');
+    next();
+  });
+
   app.use('/admin', require('./dashboard'));
+  app.use('/admin', require('./users'));
+
+
   // catch 404 and forward to error handler
   app.use('/admin*', function(req, res, next) {
       var err = new Error('Not Found');

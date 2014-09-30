@@ -38,7 +38,7 @@ router.route('/account')
     log(user);
     user.save(function (err) {
       if(err) {
-        return res.redirect('/error', {message: err});
+        return res.render('error', {message: err});
       }
       req.flash('info', 'User updated');
       res.redirect('/account');

@@ -2,7 +2,7 @@
 var common = require(process.env.COMMON);
 
 // Logger
-var log = common.Logger('router_dashboard');
+var log = common.Logger('router_admin_dashboard');
 
 // Requirements
 log('Load Requirements');

@@ -2,4 +2,25 @@ extends ../../layouts/default
 
 block navigation
   include _includes/nav
+
+  .container
+    - if (locals.message && locals.message.length > 0)
+      .row
+        .col-md-12
+          .alert.alert-info.alert-dismissible(role='alert')
+            button.close(type='button', data-dismiss='alert')
+                span(aria-hidden='true') ×
+                span.sr-only Close
+              strong info!
+              !=" " + message
+
+    - if (locals.error && locals.error.length > 0)
+      .row
+        .col-md-12
+          .alert.alert-danger.alert-dismissible(role='alert')
+            button.close(type='button', data-dismiss='alert')
+                span(aria-hidden='true') ×
+                span.sr-only Close
+              strong Error!
+              !=" " + error
   
