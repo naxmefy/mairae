@@ -1,18 +1,31 @@
-var fs, lastLoads, loader, path;
+var log = require('./Logger')('Loader');
 
-fs = require('fs');
+log('Init Loader');
+var fs = require('fs');
+var path = require('path');
+var _ = require('lodash');
 
-path = require('path');
+var lastLoads = {};
+var defaultOptions =  {
+  excluded: [],
+  recursive: true
+}
 
-lastLoads = {};
-
-module.exports = function(folderPath) {
+module.exports = function(folderPath, options) {
   lastLoads = {};
-  loader(folderPath);
+  log('Load Folder: '+folderPath);
+  options = _.merge(defaultOptions, options);
+
+  log('Options');
+  log(options);
+
+  loader(folderPath, options);
+  log('Loaded Files: '+(lastLoads.length?lastLoads.length:0));
+  log(Object.keys(lastLoads));
   return lastLoads;
 };
 
-loader = function(folderPath) {
+var loader = function(folderPath, options) {
   var files;
   return files = fs.readdirSync(folderPath).forEach(function(file) {
     var fileName, filePath, loadedFile, stat;
@@ -20,14 +33,29 @@ loader = function(folderPath) {
     stat = fs.statSync(filePath);
     if (stat.isFile()) {
       if (/(.*)\.(js$|coffee$)/.test(file)) {
-        if (path.extname(file) === ".coffee") {
-          fileName = path.basename(file, ".coffee");
-          loadedFile = require(path.join(folderPath, fileName));
-          return lastLoads[fileName] = loadedFile;
+        if (path.extname(file) === ".js") {
+          log('Found: '+file);
+          if(options.excluded) {
+            if(!contains(options.excluded, file)) {
+              fileName = path.basename(file, ".js");
+              loadedFile = require(path.join(folderPath, fileName));
+              return lastLoads[fileName] = loadedFile;
+            }
+          } else {
+            fileName = path.basename(file, ".js");
+            loadedFile = require(path.join(folderPath, fileName));
+            return lastLoads[fileName] = loadedFile;
+          }
         }
       }
     } else {
-      return loadFiles(filePath);
+      if(options.recursive) {
+        return loadFiles(filePath, options);
+      }
     }
   });
+};
+
+var contains = function(array, value) {
+  return _.contains(array, value);
 };

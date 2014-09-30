@@ -1,0 +1,12 @@
+extends layouts/default
+
+block content
+  .container
+    .row
+      .page-header
+        - if(locals.error.status)
+          h1
+            !=error.status+" "
+            small=message
+        - else
+          h1=message

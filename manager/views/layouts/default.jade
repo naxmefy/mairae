@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    block livereload
+      != LRScript
+    block bootstrap_style
+      link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+    block style
+      link(rel='stylesheet', href='/css/style.css')
+    block jquery_script  
+      script(src='//code.jquery.com/jquery-1.11.0.min.js')
+    block bootstrap_script
+      script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+
+    block favicon
+      link(rel='icon', href='/img/favicon.ico', type='image/x-icon')
+  body
+    block navigation
+      include _includes/nav
+    block content

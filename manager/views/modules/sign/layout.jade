@@ -1,0 +1,17 @@
+extends ../../layouts/default
+
+block append style
+  link(rel='stylesheet', href='/css/sign.css')
+
+block content
+  .container
+    block message
+      - if (locals.message.length > 0)
+        .alert.alert-danger.alert-dismissible(role='alert')
+          button.close(type='button', data-dismiss='alert')
+              span(aria-hidden='true') ×
+              span.sr-only Close
+            strong Warning!
+            !=" " + message
+  .container
+    block sign

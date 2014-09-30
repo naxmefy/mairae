@@ -13,12 +13,12 @@ log("Setup Retry Counter");
 var counter = 0;
 
 var connectWithRetry = function(conf, cb) {
-  database = mongoose.connect(conf.db, function(err) {
+  database = mongoose.connect(conf.mongodb, function(err) {
     if (err) {
       log("[Try: " + counter + "]Failed to connect to mongo on startup - retrying in 5 sec", err);
       counter++;
-      if (counter > conf.max_retries) {
-        if (cb !== null) {
+      if (counter > conf.mongodb_max_retries) {
+        if ((typeof cb !== "undefined" && cb !== null)) {
           cb(err);
         }
       }
@@ -27,23 +27,25 @@ var connectWithRetry = function(conf, cb) {
       }), 5000);
     } else {
       log("Successfully connected to mongo");
-      if (cb !== null) {
+      if ((typeof cb !== "undefined" && cb !== null)) {
         cb(null);
       }
     }
   });
+
+  return database;
 };
 
 module.exports = function(conf, cb) {
-  log(conf);
   if (database === null) {
     log("Init Database");
-    connectWithRetry(conf, cb);
+    log(conf);
+    return connectWithRetry(conf, cb);
   } else {
     log("Found Database Connection");
-    if (cb !== null) {
+    if ((typeof cb !== "undefined" && cb !== null)) {
       cb(null);
     }
-    database;
+    return database;
   }
 };

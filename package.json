@@ -2,11 +2,14 @@
   "name": "mairae",
   "version": "0.0.0",
   "description": "coming soon",
+  "private": true,
+  "bin": "./bin/mairae",
   "main": "app.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
+    "start": "nodemon -q app.js",
     "test": "mocha"
   },
   "repository": {
@@ -34,7 +37,7 @@
     "cookie-parser": "^1.3.3",
     "debug": "^2.0.0",
     "express": "^4.9.5",
-    "express-session": "^1.8.2",
+    "express-session": "~1.0.0",
     "jade": "^1.7.0",
     "lodash": "^2.4.1",
     "method-override": "^2.2.0",
